@@ -3,80 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Expressive Material 3 themes for the Jet Keyboard app.">
+    <meta name="theme-color" content="#F8F9FA">
     <title>JetKeyboard | Theme Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F8F9FA; color: #1F1F1F; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8F9FA; color: #1F1F1F; overflow-x: hidden; }
         .glass { background: #FFFFFF; border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 4px 24px rgba(0,0,0,0.04); }
-        .kb-preview { border-radius: 16px; height: 130px; position: relative; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); }
-        .key { width: 26px; height: 36px; border-radius: 6px; display: inline-block; margin: 2px; }
+        .kb-preview {
+            border-radius: 16px;
+            height: clamp(96px, 24vw, 130px);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .key {
+            width: clamp(18px, 6vw, 26px);
+            height: clamp(26px, 8vw, 36px);
+            border-radius: 6px;
+            display: inline-block;
+            margin: 2px;
+        }
+
+        /* Extra-small phones: tighten spacing further */
+        @media (max-width: 380px) {
+            .key { margin: 1.5px; }
+        }
+
+        .card-enter {
+            opacity: 0;
+            transform: translateY(12px);
+            animation: cardIn 0.4s ease forwards;
+        }
+        @keyframes cardIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .active-ring {
+            outline: 2px solid #2563eb;
+            outline-offset: 3px;
+        }
+        .active-badge {
+            font-size: 11px; font-weight: 800; letter-spacing: 0.06em;
+            background: #dcfce7; color: #166534; padding: 3px 12px; border-radius: 999px;
+        }
+        .set-default-btn {
+            font-size: 12px; font-weight: 700; padding: 10px 16px; border-radius: 999px;
+            background: #F1F3F5; color: #1F1F1F; transition: all .15s ease; border: none; cursor: pointer;
+            min-height: 40px; width: 100%;
+        }
+        .set-default-btn:hover { background: #E5E8EB; }
+        .set-default-btn:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
+
+        @media (min-width: 640px) {
+            .set-default-btn { width: auto; min-height: auto; padding: 8px 16px; }
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, #E9ECEF 25%, #F1F3F5 37%, #E9ECEF 63%);
+            background-size: 400% 100%;
+            animation: shimmer 1.4s ease infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 100% 50%; }
+            100% { background-position: 0 50%; }
+        }
     </style>
 </head>
-<body class="p-6 md:p-12">
+<body class="p-4 sm:p-6 md:p-12" style="padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right));">
     <div class="max-w-6xl mx-auto">
-        <header class="flex flex-col md:flex-row justify-between items-center mb-16 gap-6">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-10 sm:mb-16 gap-5 sm:gap-6">
             <div class="text-center md:text-left">
-                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-3 text-slate-900">
+                <h1 class="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight mb-2 sm:mb-3 text-slate-900">
                     Jet<span class="text-blue-600">Theme</span>
                 </h1>
-                <p class="text-slate-500 text-lg font-medium">Expressive Material 3 themes for jet keyboard app.</p>
+                <p class="text-slate-500 text-base sm:text-lg font-medium px-2 sm:px-0">Expressive Material 3 themes for jet keyboard app.</p>
             </div>
-            <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-2xl font-bold transition-all shadow-xl shadow-blue-500/25 active:scale-95">
+            <a href="#" class="w-full md:w-auto text-center bg-blue-600 hover:bg-blue-700 text-white px-8 sm:px-10 py-3.5 sm:py-4 rounded-2xl font-bold transition-all shadow-xl shadow-blue-500/25 active:scale-95">
                 Get the App
             </a>
         </header>
 
-        <div id="theme-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            <!-- Themes loaded via JS -->
-            <div class="animate-pulse flex flex-col gap-4">
-                <div class="h-44 bg-slate-200 rounded-3xl"></div>
-                <div class="h-6 bg-slate-200 rounded w-2/3"></div>
+        <div id="theme-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8 md:gap-10" aria-live="polite">
+            <div class="flex flex-col gap-4">
+                <div class="h-36 sm:h-44 skeleton rounded-3xl"></div>
+                <div class="h-6 skeleton rounded w-2/3"></div>
+            </div>
+            <div class="flex flex-col gap-4">
+                <div class="h-36 sm:h-44 skeleton rounded-3xl"></div>
+                <div class="h-6 skeleton rounded w-2/3"></div>
+            </div>
+            <div class="flex flex-col gap-4">
+                <div class="h-36 sm:h-44 skeleton rounded-3xl"></div>
+                <div class="h-6 skeleton rounded w-2/3"></div>
             </div>
         </div>
 
-        <footer class="mt-32 text-center text-slate-400 border-t border-slate-200 pt-10 pb-10">
-            <p class="font-semibold">&copy; 2026 Jet Keyboard. Crafted with ❤️ by jetkb team.</p>
+        <footer class="mt-16 sm:mt-24 md:mt-32 text-center text-slate-400 border-t border-slate-200 pt-8 sm:pt-10 pb-8 sm:pb-10 px-4">
+            <p class="font-semibold text-sm sm:text-base">&copy; 2026 Jet Keyboard. Crafted with ❤️ by jetkb team.</p>
         </footer>
     </div>
 
     <script>
+        const STORAGE_KEY = 'jettheme_active_theme';
+        const grid = document.getElementById('theme-grid');
+
+        function getActiveThemeId(themes) {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored && themes.some(t => t.id === stored)) return stored;
+            const fallback = themes.find(t => t.default) || themes[0];
+            return fallback ? fallback.id : null;
+        }
+
+        function setActiveThemeId(id) {
+            localStorage.setItem(STORAGE_KEY, id);
+        }
+
+        function renderCard(theme, isActive, index) {
+            const card = document.createElement('div');
+            card.className = [
+                'glass rounded-3xl sm:rounded-[32px] p-5 sm:p-8 transition-all hover:-translate-y-2 hover:shadow-2xl hover:border-blue-500/20 group card-enter',
+                isActive ? 'active-ring' : ''
+            ].join(' ').trim();
+            card.style.animationDelay = `${index * 60}ms`;
+
+            const accent = theme.colors.keyAccent;
+            const funcKey = theme.colors.keyBgFunc || theme.colors.keyBg;
+
+            card.innerHTML = `
+                <div class="kb-preview mb-5 sm:mb-8 flex flex-col justify-center items-center gap-1.5 sm:gap-2" style="background-color: ${theme.colors.bgKeyboard}">
+                    <div class="flex gap-1">
+                        ${Array(5).fill(`<div class="key shadow-sm" style="background-color: ${theme.colors.keyBg}"></div>`).join('')}
+                    </div>
+                    <div class="flex gap-1">
+                        ${Array(4).fill(`<div class="key shadow-sm opacity-80" style="background-color: ${funcKey}"></div>`).join('')}
+                    </div>
+                </div>
+                <div class="flex justify-between items-start sm:items-center gap-3 mb-4 sm:mb-6">
+                    <div class="min-w-0">
+                        <h3 class="text-xl sm:text-2xl font-black text-slate-900 mb-1 truncate">${theme.name}</h3>
+                        <p class="text-slate-400 font-bold text-xs sm:text-sm uppercase tracking-widest truncate">${theme.author}</p>
+                    </div>
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center shadow-inner shrink-0" style="background-color: ${accent}">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    ${isActive
+                        ? `<span class="active-badge">ACTIVE</span>`
+                        : `<button type="button" class="set-default-btn" data-id="${theme.id}">Set as default</button>`}
+                </div>
+            `;
+
+            if (!isActive) {
+                card.querySelector('.set-default-btn').addEventListener('click', () => {
+                    setActiveThemeId(theme.id);
+                    renderThemes(currentThemes);
+                });
+            }
+
+            return card;
+        }
+
+        let currentThemes = [];
+
+        function renderThemes(themes) {
+            currentThemes = themes;
+            const activeId = getActiveThemeId(themes);
+            grid.innerHTML = '';
+            const frag = document.createDocumentFragment();
+            themes.forEach((theme, i) => frag.appendChild(renderCard(theme, theme.id === activeId, i)));
+            grid.appendChild(frag);
+        }
+
         async function loadThemes() {
             try {
                 const response = await fetch('themes.json');
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 const data = await response.json();
-                const grid = document.getElementById('theme-grid');
-                grid.innerHTML = '';
 
-                data.themes.forEach(theme => {
-                    const card = document.createElement('div');
-                    card.className = 'glass rounded-[32px] p-8 transition-all hover:-translate-y-2 hover:shadow-2xl hover:border-blue-500/20 group';
-                    
-                    card.innerHTML = `
-                        <div class="kb-preview mb-8 flex flex-col justify-center items-center gap-2" style="background-color: ${theme.colors.bgKeyboard}">
-                            <div class="flex gap-1">
-                                ${Array(5).fill(`<div class="key shadow-sm" style="background-color: ${theme.colors.keyBg}"></div>`).join('')}
-                            </div>
-                            <div class="flex gap-1">
-                                ${Array(4).fill(`<div class="key shadow-sm opacity-80" style="background-color: ${theme.colors.keyBgFunc || theme.colors.keyBg}"></div>`).join('')}
-                            </div>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <h3 class="text-2xl font-black text-slate-900 mb-1">${theme.name}</h3>
-                                <p class="text-slate-400 font-bold text-sm uppercase tracking-widest">${theme.author}</p>
-                            </div>
-                            <div class="w-12 h-12 rounded-2xl flex items-center justify-center shadow-inner" style="background-color: ${theme.colors.keyAccent}">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-                });
+                if (!Array.isArray(data.themes) || data.themes.length === 0) {
+                    throw new Error('No themes found');
+                }
+
+                renderThemes(data.themes);
             } catch (error) {
+                console.error('Error loading themes:', error);
                 grid.innerHTML = '<div class="col-span-full text-center py-20 text-red-500 font-bold">Failed to load the store. Check back soon!</div>';
             }
         }
+
         loadThemes();
     </script>
 </body>
