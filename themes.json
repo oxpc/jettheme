@@ -1,1 +1,16 @@
-mm
+{
+  "version": 1,
+  "themes": [
+    {
+      "id": "neon_night",
+      "name": "Neon Night",
+      "author": "JetKeyboard",
+      "colors": {
+        "bgKeyboard": "#1A1A1A",
+        "keyBg": "#333333",
+        "textMain": "#00FF00",
+        "keyAccent": "#FF00FF"
+      }
+    }
+  ]
+}
