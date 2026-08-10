@@ -7,36 +7,36 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: white; }
-        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .kb-preview { border-radius: 12px; height: 120px; position: relative; overflow: hidden; }
-        .key { width: 24px; height: 32px; border-radius: 4px; display: inline-block; margin: 2px; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8F9FA; color: #1F1F1F; }
+        .glass { background: #FFFFFF; border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 4px 24px rgba(0,0,0,0.04); }
+        .kb-preview { border-radius: 16px; height: 130px; position: relative; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); }
+        .key { width: 26px; height: 36px; border-radius: 6px; display: inline-block; margin: 2px; }
     </style>
 </head>
 <body class="p-6 md:p-12">
     <div class="max-w-6xl mx-auto">
-        <header class="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
-            <div>
-                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-2">
-                    Jet<span class="text-blue-500">Theme</span>
+        <header class="flex flex-col md:flex-row justify-between items-center mb-16 gap-6">
+            <div class="text-center md:text-left">
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-3 text-slate-900">
+                    Jet<span class="text-blue-600">Theme</span>
                 </h1>
-                <p class="text-slate-400 text-lg">Modern themes for your favorite keyboard.</p>
+                <p class="text-slate-500 text-lg font-medium">Expressive Material 3 themes for your keyboard.</p>
             </div>
-            <a href="#" class="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-full font-semibold transition-all shadow-lg shadow-blue-500/20">
-                Download Keyboard
+            <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-2xl font-bold transition-all shadow-xl shadow-blue-500/25 active:scale-95">
+                Get the App
             </a>
         </header>
 
-        <div id="theme-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Themes will be injected here -->
+        <div id="theme-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <!-- Themes loaded via JS -->
             <div class="animate-pulse flex flex-col gap-4">
-                <div class="h-40 bg-slate-800 rounded-2xl"></div>
-                <div class="h-6 bg-slate-800 rounded w-3/4"></div>
+                <div class="h-44 bg-slate-200 rounded-3xl"></div>
+                <div class="h-6 bg-slate-200 rounded w-2/3"></div>
             </div>
         </div>
 
-        <footer class="mt-24 text-center text-slate-500 border-t border-slate-800 pt-8">
-            <p>&copy; 2026 Jet KB. Powered by hajif.</p>
+        <footer class="mt-32 text-center text-slate-400 border-t border-slate-200 pt-10 pb-10">
+            <p class="font-semibold">&copy; 2026 Jet Keyboard. Crafted with ❤️ by hajif.</p>
         </footer>
     </div>
 
@@ -50,33 +50,31 @@
 
                 data.themes.forEach(theme => {
                     const card = document.createElement('div');
-                    card.className = 'glass rounded-3xl p-6 transition-all hover:scale-[1.02] hover:border-blue-500/50';
+                    card.className = 'glass rounded-[32px] p-8 transition-all hover:-translate-y-2 hover:shadow-2xl hover:border-blue-500/20 group';
                     
                     card.innerHTML = `
-                        <div class="kb-preview mb-6 flex flex-col justify-center items-center gap-2" style="background-color: ${theme.colors.bgKeyboard}">
+                        <div class="kb-preview mb-8 flex flex-col justify-center items-center gap-2" style="background-color: ${theme.colors.bgKeyboard}">
                             <div class="flex gap-1">
-                                ${Array(5).fill(`<div class="key shadow-sm" style="background-color: ${theme.colors.keyBg}; border: 1px solid rgba(0,0,0,0.1)"></div>`).join('')}
+                                ${Array(5).fill(`<div class="key shadow-sm" style="background-color: ${theme.colors.keyBg}"></div>`).join('')}
                             </div>
                             <div class="flex gap-1">
-                                ${Array(4).fill(`<div class="key shadow-sm" style="background-color: ${theme.colors.keyBgFunc}; border: 1px solid rgba(0,0,0,0.1)"></div>`).join('')}
+                                ${Array(4).fill(`<div class="key shadow-sm opacity-80" style="background-color: ${theme.colors.keyBgFunc || theme.colors.keyBg}"></div>`).join('')}
                             </div>
                         </div>
-                        <div class="flex justify-between items-end">
+                        <div class="flex justify-between items-center">
                             <div>
-                                <h3 class="text-xl font-bold mb-1">${theme.name}</h3>
-                                <p class="text-slate-400 text-sm">by ${theme.author}</p>
+                                <h3 class="text-2xl font-black text-slate-900 mb-1">${theme.name}</h3>
+                                <p class="text-slate-400 font-bold text-sm uppercase tracking-widest">${theme.author}</p>
                             </div>
-                            <div class="flex gap-2">
-                                <div class="w-6 h-6 rounded-full border border-white/20" style="background-color: ${theme.colors.bgKeyboard}"></div>
-                                <div class="w-6 h-6 rounded-full border border-white/20" style="background-color: ${theme.colors.keyAccent}"></div>
+                            <div class="w-12 h-12 rounded-2xl flex items-center justify-center shadow-inner" style="background-color: ${theme.colors.keyAccent}">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
                             </div>
                         </div>
                     `;
                     grid.appendChild(card);
                 });
             } catch (error) {
-                console.error('Error loading themes:', error);
-                document.getElementById('theme-grid').innerHTML = '<p class="text-red-400">Failed to load themes. Please try again later.</p>';
+                grid.innerHTML = '<div class="col-span-full text-center py-20 text-red-500 font-bold">Failed to load the store. Check back soon!</div>';
             }
         }
         loadThemes();
